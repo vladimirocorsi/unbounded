@@ -23,14 +23,14 @@ func TestMakeInfiniteNoPause(t *testing.T) {
 		wg.Done()
 		fmt.Println("finished reading")
 	}()
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 10000; i++ {
 		in <- i
 	}
 	close(in)
 	fmt.Println("finished writing")
 	wg.Wait()
 
-	if lastVal != 99 {
+	if lastVal != 9999 {
 		t.Errorf("Didn't get all values, last one received was %d", lastVal)
 	}
 }
@@ -42,7 +42,7 @@ func TestMakeInfiniteSlowRead(t *testing.T) {
 	wg.Add(1)
 	go func() {
 		for v := range out {
-			time.Sleep(50*time.Millisecond)
+			time.Sleep(50 * time.Millisecond)
 			vi := v.(int)
 			if lastVal+1 != vi {
 				t.Errorf("Unexpected value; expected %d, got %d", lastVal+1, vi)
@@ -81,7 +81,7 @@ func TestMakeInfiniteSlowWrite(t *testing.T) {
 		fmt.Println("finished reading")
 	}()
 	for i := 0; i < 100; i++ {
-		time.Sleep(50*time.Millisecond)
+		time.Sleep(50 * time.Millisecond)
 		in <- i
 	}
 	close(in)

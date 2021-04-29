@@ -1,3 +1,4 @@
 # Unbounded
 
-Code for https://medium.com/capital-one-tech/building-an-unbounded-channel-in-go-789e175cd2cd
+Same as https://github.com/jonbodner/unbounded but using a ring buffer.
+Has an issue with backing array never being shrinked when space is not needed anymore, e.g. queue gets emptied.
